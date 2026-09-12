@@ -1,0 +1,223 @@
+/* NERO 控制台主题：黑 #0b0d10 / 银 #c8cdd6 / 红 #e63946（可切亮色） */
+:root {
+  --bg: #0b0d10;
+  --bg-panel: #12151a;
+  --bg-panel-2: #171b21;
+  --bg-hover: #1c2128;
+  --silver: #c8cdd6;
+  --silver-dim: #7d8490;
+  --red: #e63946;
+  --red-strong: #c62839;
+  --red-dim: #8f232c;
+  --red-tint: #241417;
+  --border: #262b33;
+  --ok: #4ade80;
+  --warn: #fbbf24;
+  --track: #3a4150;            /* 仪表底弧 / 滑杆轨道 */
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+}
+
+/* 亮色主题（body.light 覆盖） */
+body.light {
+  --bg: #eceef3;
+  --bg-panel: #ffffff;
+  --bg-panel-2: #f3f5f9;
+  --bg-hover: #e8ebf2;
+  --silver: #2a2f38;
+  --silver-dim: #66707e;
+  --border: #ccd2dd;
+  --red-dim: #e63946;
+  --red-tint: #fdecec;
+  --track: #dfe3ea;
+  --shadow: 0 1px 3px rgba(16, 24, 40, 0.10), 0 4px 14px rgba(16, 24, 40, 0.06);
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--silver);
+  font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+/* 顶栏 */
+#topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 8px 18px;
+  background: linear-gradient(180deg, var(--bg-panel-2), var(--bg-panel));
+  border-bottom: 1px solid var(--border);
+  flex: 0 0 auto;
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+.brand { font-size: 20px; font-weight: 700; letter-spacing: 3px; color: var(--silver); }
+.brand::first-letter { color: var(--red); }
+.brand-sub { font-size: 12px; font-weight: 400; letter-spacing: 1px; color: var(--silver-dim); margin-left: 10px; }
+.top-right { display: flex; align-items: center; gap: 14px; }
+
+.badge {
+  padding: 3px 12px; border-radius: 12px; font-size: 12px; font-weight: 600;
+  letter-spacing: 1px; border: 1px solid var(--border);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.badge-idle  { color: var(--silver-dim); background: var(--bg-panel-2); }
+.badge-follow{ color: #06210f; background: var(--ok); border-color: var(--ok); }
+.badge-play  { color: #2b1d02; background: var(--warn); border-color: var(--warn); }
+.badge-rec   { color: #fff; background: var(--red); border-color: var(--red); animation: blink 1s infinite; }
+.hidden { display: none !important; }
+@keyframes blink { 50% { opacity: 0.35; } }
+
+.fps { font-size: 12px; color: var(--silver-dim); font-variant-numeric: tabular-nums; }
+.ws-state { font-size: 12px; color: var(--red); }
+.ws-state.on { color: var(--ok); }
+
+/* 网格布局 */
+#grid {
+  flex: 1 1 auto;
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  grid-template-rows: 1.5fr 1fr;
+  gap: 10px; padding: 10px;
+  min-height: 0;
+}
+.panel {
+  background: var(--bg-panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  display: flex; flex-direction: column;
+  min-height: 0; overflow: hidden;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+.panel-title {
+  padding: 8px 14px 8px 11px; font-size: 13px; font-weight: 600; color: var(--silver);
+  border-bottom: 1px solid var(--border); border-left: 3px solid var(--red);
+  background: var(--bg-panel-2);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+.panel-sub { font-size: 11px; font-weight: 400; color: var(--silver-dim); margin-left: 8px; }
+
+.panel-cam    { grid-column: 1; grid-row: 1; }
+.panel-3d     { grid-column: 2; grid-row: 1; }
+.panel-dash   { grid-column: 1; grid-row: 2; }
+
+/* 相机视图 */
+.cam-wrap { position: relative; flex: 1; min-height: 0; background: #000; }
+#video { width: 100%; height: 100%; object-fit: contain; display: block; }
+/* P5 叠加画布：JS 计算视频 contain 区域后精确定位 */
+.cam-wrap canvas {
+  position: absolute;
+  pointer-events: none;
+}
+.cam-hud {
+  display: flex; gap: 20px; padding: 6px 14px;
+  border-top: 1px solid var(--border); font-size: 12px; color: var(--silver-dim);
+}
+.cam-hud b { color: var(--silver); font-variant-numeric: tabular-nums; }
+
+/* 3D */
+#three-wrap { flex: 1; min-height: 0; }
+#three-wrap canvas { display: block; outline: none; }
+
+/* 仪表 */
+.panel-dash { padding-bottom: 8px; }
+.gauges-row {
+  display: flex; justify-content: space-around; align-items: center;
+  flex: 1; min-height: 0; padding: 4px 10px 0;
+}
+.gauge { display: flex; flex-direction: column; align-items: center; }
+.gauge svg { width: 120px; height: 78px; }
+.gauge-label { font-size: 11px; color: var(--silver-dim); margin-top: -6px; }
+
+#servo-trend { height: 56px; margin: 4px 14px; border: 1px solid var(--border); border-radius: 6px; background: var(--bg-panel-2); }
+
+.status-lines {
+  font-size: 12px; color: var(--silver-dim); padding: 2px 14px;
+  font-variant-numeric: tabular-nums; white-space: pre-line; line-height: 1.5;
+}
+
+/* 控制按钮 */
+.controls { display: flex; gap: 10px; padding: 8px 14px 10px; flex-wrap: wrap; }
+.btn {
+  padding: 9px 18px; border-radius: 8px; cursor: pointer;
+  background: var(--bg-panel-2); color: var(--silver);
+  border: 1px solid var(--border); font-size: 13px; font-weight: 600;
+  transition: all 0.15s;
+}
+.btn:hover { border-color: var(--silver-dim); background: var(--bg-hover); }
+.btn:active { transform: scale(0.97); }
+.btn:focus-visible { outline: 2px solid var(--red); outline-offset: 1px; }
+.btn-primary { background: var(--red); border-color: var(--red); color: #fff; }
+.btn-primary:hover { background: var(--red-strong); border-color: var(--red-strong); }
+.btn-danger { border-color: var(--red-dim); color: var(--red); }
+.btn-danger:hover { background: var(--red); border-color: var(--red); color: #fff; }
+
+/* 设置面板 */
+.settings-panel {
+  grid-column: 2; grid-row: 2;
+  display: flex; flex-direction: column;
+  overflow-y: auto;
+}
+.settings-panel::-webkit-scrollbar { width: 8px; }
+.settings-panel::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+.settings-panel::-webkit-scrollbar-track { background: transparent; }
+
+.settings-section-title {
+  padding: 8px 14px 4px; font-size: 11px; font-weight: 700;
+  letter-spacing: 1px; color: var(--red);
+  border-top: 1px solid var(--border);
+}
+.settings-section-title:first-child { border-top: none; }
+.settings-panel .setting-row {
+  display: flex; align-items: center; gap: 8px;
+  padding: 7px 14px; font-size: 13px; color: var(--silver);
+  cursor: pointer; user-select: none;
+  transition: background-color 0.12s;
+}
+.settings-panel .setting-row:hover { background: var(--bg-panel-2); }
+.settings-panel .setting-row input { accent-color: var(--red); width: 15px; height: 15px; }
+.settings-panel .btn { margin: 8px 14px; }
+
+/* 机械臂参数滑杆 */
+.param-row { padding: 6px 14px 2px; }
+.param-head {
+  display: flex; justify-content: space-between;
+  font-size: 12px; color: var(--silver); margin-bottom: 4px;
+}
+.param-head b { color: var(--red); font-variant-numeric: tabular-nums; }
+.param-row input[type="range"] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 4px; border-radius: 2px;
+  background: var(--track); cursor: pointer;
+}
+.param-row input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 14px; height: 14px; border-radius: 50%;
+  background: var(--red); border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  transition: transform 0.1s;
+}
+.param-row input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+.param-row input[type="range"]::-moz-range-thumb {
+  width: 12px; height: 12px; border-radius: 50%;
+  background: var(--red); border: 2px solid #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+}
+.param-row input[type="range"]::-moz-range-track {
+  height: 4px; border-radius: 2px; background: var(--track);
+}
+.param-hint {
+  padding: 6px 14px; font-size: 11px; line-height: 1.5;
+  color: var(--silver-dim);
+}
+
+/* 启动错误横幅 */
+.boot-error {
+  position: fixed; bottom: 10px; right: 10px; z-index: 99;
+  background: var(--red); color: #fff; font-size: 12px;
+  padding: 8px 14px; border-radius: 8px; max-width: 420px;
+}

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NERO · 手势跟随控制台</title>
+  <link rel="stylesheet" href="/static/css/app.css">
+  <script src="/static/js/vendor/d3.min.js"></script>
+  <script src="/static/js/vendor/p5.min.js"></script>
+  <script type="importmap">
+    { "imports": { "three": "/static/js/vendor/three.module.js",
+                   "three/addons/": "/static/js/vendor/three/addons/" } }
+  </script>
+</head>
+<body>
+  <!-- 顶栏 -->
+  <header id="topbar">
+    <div class="brand">NERO<span class="brand-sub">· 手势跟随控制台</span></div>
+      <div class="top-right">
+        <span id="mode-badge" class="badge badge-idle">IDLE</span>
+        <span id="rec-badge" class="badge badge-rec hidden">● REC</span>
+        <span id="fps" class="fps">-- FPS</span>
+        <span id="ws-state" class="ws-state">连接中…</span>
+      </div>
+  </header>
+
+  <main id="grid">
+    <!-- 左：相机视频 + P5 叠加 -->
+    <section class="panel panel-cam">
+      <div class="panel-title">相机视图 <span class="panel-sub">MediaPipe 手部追踪</span></div>
+      <div class="cam-wrap">
+        <img id="video" src="/video" alt="camera">
+      </div>
+      <div class="cam-hud">
+        <span>手势: <b id="hud-gesture">--</b></span>
+        <span>指距: <b id="hud-gap">--</b>mm</span>
+        <span>夹爪: <b id="hud-gripper">--</b>mm</span>
+      </div>
+    </section>
+
+    <!-- 右：Three.js 3D 数字孪生 -->
+    <section class="panel panel-3d">
+      <div class="panel-title">3D 数字孪生 <span class="panel-sub">左键旋转 / 右键平移 / 滚轮缩放</span></div>
+      <div id="three-wrap"></div>
+    </section>
+
+    <!-- 下：D3 仪表 + 控制 -->
+    <section class="panel panel-dash">
+      <div class="panel-title">遥测仪表 <span class="panel-sub">趋势: 红=eu 方位 / 蓝=ev 俯仰 / 橙=深度误差</span></div>
+      <div id="gauges" class="gauges-row">
+        <div class="gauge"><svg id="gauge-gripper"></svg><div class="gauge-label">夹爪开度</div></div>
+        <div class="gauge"><svg id="gauge-j1"></svg><div class="gauge-label">J1 底座</div></div>
+        <div class="gauge"><svg id="gauge-j2"></svg><div class="gauge-label">J2 肩</div></div>
+        <div class="gauge"><svg id="gauge-j4"></svg><div class="gauge-label">J4 肘</div></div>
+      </div>
+      <div id="servo-trend"></div>
+      <div id="status-lines" class="status-lines"></div>
+      <div class="controls">
+        <button id="btn-follow" class="btn btn-primary">▶ 进入跟随 (OK)</button>
+        <button id="btn-reset" class="btn">⌂ 复位 (拇指向上)</button>
+        <button id="btn-anchor" class="btn">⊙ 重新锚定 (C)</button>
+        <button id="btn-record" class="btn">● 录制 (R)</button>
+        <button id="btn-play" class="btn">▶↺ 回放 (Y)</button>
+        <button id="btn-shutdown" class="btn btn-danger">⏻ 退出</button>
+      </div>
+    </section>
+
+    <!-- 设置面板 -->
+    <aside id="settings-panel" class="panel settings-panel">
+      <div class="panel-title">设置 <span class="panel-sub">叠加层 / 机械臂参数</span></div>
+    </aside>
+  </main>
+
+  <script type="module" src="/static/js/app.js"></script>
+</body>
+</html>

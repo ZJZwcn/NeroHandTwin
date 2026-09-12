@@ -1,0 +1,13 @@
+# 真机后端配置示例（硬件到位后复制为 arm.yaml 并切换 backend: pyagx）
+# ⚠️ 首次使用必须先阅读 README「真机安全清单」
+arm:
+  backend: pyagx
+  interface: agx_cando   # Windows: agx_cando；Linux: socketcan；macOS: slcan
+  channel: "0"           # CAN 通道 / can0 / /dev/ttyACM0
+  firmware: default      # NeroFW.DEFAULT；按主控固件版本调整（见 pyAgxArm 文档）
+  speed_percent: 10      # 首次联调务必从低速开始，确认无异常再逐级上调
+  stroke_m: 0.1          # 两指夹爪行程
+  gripper_open_width_m: 0.055  # 满开时实际指间距（回读/指令归一化标定，真机实测满开回读≈55mm）
+  watchdog_s: 0.5
+  # 就绪位姿（离奇异点），弧度；对应关节角度 0, -35, 0, 115, 0, 0, 15（度）
+  ready_joints: [0.0, -0.6109, 0.0, 2.0071, 0.0, 0.0, 0.2618]

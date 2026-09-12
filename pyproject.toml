@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "NeroHandTwin"
+version = "0.1.0"
+description = "NeroHandTwin — NERO 机械臂手势交互与手部跟随数字孪生系统"
+license = { text = "MIT" }
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+    "mediapipe>=1.0.0",
+    "pyrealsense2>=2.55",
+    "mujoco>=3.0",
+    "numpy>=2.0",
+    "opencv-python>=4.9",
+    "scipy>=1.11",
+    "pyyaml>=6.0",
+    "python-can>=4.3",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"

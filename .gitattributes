@@ -1,0 +1,8 @@
+* text=auto
+
+# 二进制资产不做换行转换
+*.stl binary
+*.task binary
+*.png binary
+*.jpg binary
+*.ico binary

@@ -1,0 +1,30 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.venv/
+uv.lock
+
+# ---- 构建产物（PyInstaller）----
+build/
+dist/
+*.log
+
+# ---- 大体积可再下载模型（python scripts/download_models.py 重新获取）----
+models/
+
+# ---- 运行时生成数据（录制轨迹 / 标定样本）----
+data/
+
+# ---- 官方版权资料（不入公开仓库，本地保留）----
+doc_readme/Nero用户手册.md
+
+# ---- 安全扫描 / 会话缓存 ----
+.mimosa/
+
+# ---- IDE / 操作系统 ----
+.idea/
+.vscode/
+Thumbs.db
+.DS_Store

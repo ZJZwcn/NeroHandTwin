@@ -1,0 +1,16 @@
+# RealSense D435i 相机配置
+camera:
+  type: realsense        # realsense | mock
+  mock:
+    source: synthetic    # synthetic | webcam | video
+    index_or_path: 0
+  realsense:
+    width: 640
+    height: 480
+    fps: 30
+    serial: null
+
+tracker:
+  model_path: "models/gesture_recognizer.task"
+  depth_mode: depth      # depth=用 D435i 深度反投影（真3D）; estimate=手宽估距（webcam）
+  assumed_hand_width_m: 0.085

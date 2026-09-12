@@ -1,0 +1,22 @@
+# NeroHandTwin 依赖
+# 安装: uv pip install -p .venv/Scripts/python.exe -r requirements.txt
+
+# 感知
+mediapipe>=1.0.0        # Tasks API: 手部关键点 + 手势识别
+pyrealsense2>=2.55      # D435i 深度相机
+
+# 仿真控制
+mujoco>=3.0             # NERO 官方 MJCF 模型仿真
+
+# 数值与工具
+numpy>=2.0
+opencv-python>=4.9
+scipy>=1.11
+pyyaml>=6.0
+aiohttp>=3.9          # 网页控制台服务
+
+# 真机（pyAgxArm 依赖）
+python-can>=4.3
+
+# 测试
+pytest>=8.0

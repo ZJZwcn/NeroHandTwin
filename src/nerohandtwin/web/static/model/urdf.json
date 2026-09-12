@@ -1,0 +1,599 @@
+{
+ "root": "base_link",
+ "joints": [
+  {
+   "name": "world_to_base_link",
+   "type": "fixed",
+   "parent": "world",
+   "child": "base_link",
+   "origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "axis": [
+    0,
+    0,
+    1
+   ],
+   "limit": null
+  },
+  {
+   "name": "joint1",
+   "type": "revolute",
+   "parent": "base_link",
+   "child": "link1",
+   "origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.138
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "axis": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limit": [
+    -2.70526,
+    2.70526
+   ]
+  },
+  {
+   "name": "joint2",
+   "type": "revolute",
+   "parent": "link1",
+   "child": "link2",
+   "origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     1.5707963,
+     3.1415926,
+     0.0
+    ]
+   },
+   "axis": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limit": [
+    -1.74,
+    1.74
+   ]
+  },
+  {
+   "name": "joint3",
+   "type": "revolute",
+   "parent": "link2",
+   "child": "link3",
+   "origin": {
+    "xyz": [
+     0.0,
+     -0.31,
+     0.0
+    ],
+    "rpy": [
+     -1.5707963,
+     0.0,
+     3.1415926926
+    ]
+   },
+   "axis": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limit": [
+    -2.75,
+    2.75
+   ]
+  },
+  {
+   "name": "joint4",
+   "type": "revolute",
+   "parent": "link3",
+   "child": "link4",
+   "origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     -1.5707963,
+     0.0,
+     3.1415926926
+    ]
+   },
+   "axis": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limit": [
+    -1.01,
+    2.14
+   ]
+  },
+  {
+   "name": "joint5",
+   "type": "revolute",
+   "parent": "link4",
+   "child": "link5",
+   "origin": {
+    "xyz": [
+     0.0,
+     -0.27001,
+     0.0
+    ],
+    "rpy": [
+     1.5707963,
+     -1.5707963,
+     0.0
+    ]
+   },
+   "axis": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limit": [
+    -2.75,
+    2.75
+   ]
+  },
+  {
+   "name": "joint6",
+   "type": "revolute",
+   "parent": "link5",
+   "child": "link6",
+   "origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     1.5707963,
+     -1.5707963,
+     0.0
+    ]
+   },
+   "axis": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limit": [
+    -0.73,
+    0.95
+   ]
+  },
+  {
+   "name": "joint7",
+   "type": "revolute",
+   "parent": "link6",
+   "child": "link7",
+   "origin": {
+    "xyz": [
+     0.0,
+     -0.0235,
+     0.0
+    ],
+    "rpy": [
+     1.5707963,
+     0.0,
+     0.0
+    ]
+   },
+   "axis": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limit": [
+    -1.5707963,
+    1.5707963
+   ]
+  },
+  {
+   "name": "gripper_flange_joint",
+   "type": "fixed",
+   "parent": "link7",
+   "child": "gripper_flange",
+   "origin": {
+    "xyz": [
+     0.032,
+     0.0,
+     -0.0235
+    ],
+    "rpy": [
+     -1.5708,
+     0.0,
+     -1.5708
+    ]
+   },
+   "axis": [
+    0,
+    0,
+    1
+   ],
+   "limit": null
+  },
+  {
+   "name": "gripper_base_joint",
+   "type": "fixed",
+   "parent": "gripper_flange",
+   "child": "gripper_base",
+   "origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0055
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "axis": [
+    0,
+    0,
+    1
+   ],
+   "limit": null
+  },
+  {
+   "name": "gripper_joint1",
+   "type": "prismatic",
+   "parent": "gripper_base",
+   "child": "gripper_link1",
+   "origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.1358
+    ],
+    "rpy": [
+     1.5707963,
+     0.0,
+     3.1415926
+    ]
+   },
+   "axis": [
+    0.0,
+    0.0,
+    1.0
+   ],
+   "limit": [
+    0.0,
+    0.05
+   ]
+  },
+  {
+   "name": "gripper_joint2",
+   "type": "prismatic",
+   "parent": "gripper_base",
+   "child": "gripper_link2",
+   "origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.1358
+    ],
+    "rpy": [
+     1.5707963,
+     0.0,
+     0.0
+    ]
+   },
+   "axis": [
+    0.0,
+    0.0,
+    -1.0
+   ],
+   "limit": [
+    -0.05,
+    0.0
+   ]
+  },
+  {
+   "name": "camera_stand_joint",
+   "type": "fixed",
+   "parent": "gripper_base",
+   "child": "camera_stand_link",
+   "origin": {
+    "xyz": [
+     0.034,
+     0.001,
+     0.022
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     3.14
+    ]
+   },
+   "axis": [
+    0,
+    0,
+    1
+   ],
+   "limit": null
+  },
+  {
+   "name": "camera_joint",
+   "type": "fixed",
+   "parent": "d435_camera_link",
+   "child": "camera_bottom_screw_frame",
+   "origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "axis": [
+    0,
+    0,
+    1
+   ],
+   "limit": null
+  },
+  {
+   "name": "camera_link_joint",
+   "type": "fixed",
+   "parent": "camera_bottom_screw_frame",
+   "child": "camera_link",
+   "origin": {
+    "xyz": [
+     0.010600000000000002,
+     0.0175,
+     0.0125
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   "axis": [
+    0,
+    0,
+    1
+   ],
+   "limit": null
+  },
+  {
+   "name": "d435_camera_joint",
+   "type": "fixed",
+   "parent": "camera_stand_link",
+   "child": "d435_camera_link",
+   "origin": {
+    "xyz": [
+     -0.031,
+     -0.028,
+     0.0018
+    ],
+    "rpy": [
+     0.0,
+     -1.22,
+     0.0
+    ]
+   },
+   "axis": [
+    0,
+    0,
+    1
+   ],
+   "limit": null
+  }
+ ],
+ "links": {
+  "base_link": {
+   "mesh": "link/base_link.stl",
+   "mesh_origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "link1": {
+   "mesh": "link/link1.stl",
+   "mesh_origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "link2": {
+   "mesh": "link/link2.stl",
+   "mesh_origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "link3": {
+   "mesh": "link/link3.stl",
+   "mesh_origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "link4": {
+   "mesh": "link/link4.stl",
+   "mesh_origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "link5": {
+   "mesh": "link/link5.stl",
+   "mesh_origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "link6": {
+   "mesh": "link/link6.stl",
+   "mesh_origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "link7": {
+   "mesh": "link/link7.stl",
+   "mesh_origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "gripper_flange": {
+   "mesh": "link/gripper_flange.stl",
+   "mesh_origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "gripper_base": {
+   "mesh": "link/gripper_base.stl",
+   "mesh_origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "gripper_link1": {
+   "mesh": "link/gripper_link1.stl",
+   "mesh_origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  },
+  "gripper_link2": {
+   "mesh": "link/gripper_link2.stl",
+   "mesh_origin": {
+    "xyz": [
+     0.0,
+     0.0,
+     0.0
+    ],
+    "rpy": [
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  }
+ },
+ "source": "nero_gripper_d435.urdf"
+}

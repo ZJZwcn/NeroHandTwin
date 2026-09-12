@@ -1,0 +1,76 @@
+# 工作空间映射与限速
+workspace:
+  follow_mode: gimbal   # gimbal = 图像空间伺服（十字追手，无需标定，推荐）
+                        # cartesian = 笛卡尔跟随（需 calibrate_quick/touch 标定）
+  mode: relative        # 仅 cartesian 模式使用
+  enabled: true
+  # 输出安全盒（基座系，米）——末端目标被硬裁剪到该盒内。
+  # x 从 0.22 起：基座轴附近低处不可达（肘限位），从构造上避开死区
+  box_min: [0.22, -0.30, 0.25]
+  box_max: [0.45, 0.30, 0.55]
+  # 手部舞台跨度（米）：进入跟随时以当前手掌位置为中心自动展开
+  cam_min: [-0.115, -0.15, -0.15]
+  cam_max: [0.115, 0.15, 0.15]
+  scale: 1.0            # relative 模式位移增益
+
+  # 可达壳层：基座轴附近低处（z<0.35m）不可达区兜底
+  shell_r_min: 0.22
+  shell_z_min: 0.25
+  shell_z_split: 0.35
+
+speed:
+  max_speed: 0.08       # 末端线速度上限 m/s（真机建议先用 0.05）
+  max_accel: 0.5        # 末端加速度上限 m/s^2
+
+filter:
+  freq: 30.0            # 标称采样率 Hz
+  min_cutoff: 1.2       # One Euro：越小越平滑
+  beta: 0.02            # One Euro：越大快速响应越好
+  d_cutoff: 1.0
+
+# 协同跟随（follow_mode: gimbal）：免标定，J1 对方位 / J2+J4 追手的
+# 水平线与前后安全距离 / J7 保持夹爪水平朝前 / J3 J5 J6 配合保持。
+# 安装要求：相机与手保持同一水平高度（光心≈手的工作高度），夹爪即与
+# 手同线；夹爪开口恒水平并正对手（J7/J6 自动保持）。
+gimbal:
+  # 三轴像素/深度误差 → 关节角速度 增量伺服（无逆解、免标定）。
+  # 键名与 GimbalFollowController 一一对应，网页“机械臂参数”面板可运行时热调。
+  #
+  # 速度相关的三个层级（都可提速，建议按此顺序逐级上调）：
+  #   1) arm.yaml speed_percent —— SDK 全局速度上限，默认 10% 是首次联调保守值
+  #   2) max_joint_rate       —— 关节目标每秒最多移动多少弧度（软限速）
+  #   3) k_yaw/k_pitch/k_depth —— 误差→角速度增益，越大响应越快、越易抖
+
+  # --- J1 底座方位（手偏画面左右 → 臂左右转） ---
+  k_yaw: 0.9            # rad/s 每 1.0 画面宽度误差
+  sign_yaw: -1          # 方向反了改 1
+  deadzone_u: 0.04      # 死区（画面宽度比例，防抖）
+
+  # --- J4 肘俯仰（手偏画面上下 → 臂抬落） ---
+  k_pitch: 0.7          # rad/s 每 1.0 画面高度误差
+  sign_pitch: 1         # 方向反了改 -1
+  deadzone_v: 0.05      # 死区（画面高度比例）
+
+  # --- J2 肩前后（手-相机深度 vs 参考距离 → 保持安全距离） ---
+  k_depth: 0.6          # rad/s 每 1m 深度误差
+  sign_depth: -1        # 方向反了改 1
+  deadzone_z: 0.04      # 死区（米，安全带）
+  z_ref: 0.40           # 手-相机参考距离（米）
+
+  # --- 关节目标限速（rad/s；进入跟随的大幅重构也由此平滑） ---
+  # 0.5 ≈ 29°/s。提速建议：先 0.8，稳定后 1.0~1.2（配合 speed_percent 30~50）
+  max_joint_rate: 0.5
+point:
+  arrive_tol_m: 0.02    # 到位判定距离阈值（米）
+  confirm_s: 0.5        # 停留在阈值内的确认时间（秒）
+
+# 动作编排（点赞=点头 / 碰拳=摇头）：相对触发点的小幅偏移航点
+action:
+  amplitude_m: 0.04     # 动作幅度（偏移峰值，米）
+  segment_s: 0.8        # 每段航点时长（秒）——峰值速度须 < 末端限速 80mm/s
+
+gripper:
+  stroke_m: 0.1         # 两指夹爪总行程 100mm（完全张开 = 满行程）
+  pinch_min: 0.15       # 旧捏合度映射下限（笛卡尔跟随降级用）
+  pinch_max: 0.85
+  invert: false
