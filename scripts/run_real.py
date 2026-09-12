@@ -42,10 +42,14 @@ def _frozen_selftest() -> int:
         ("aiohttp", "aiohttp"),
         ("mediapipe.tasks.python", "mediapipe"),
         ("pyrealsense2", "pyrealsense2"),
-        ("pyAgxArm", "pyAgxArm"),
         ("can", "python-can"),
         ("agx_cando.bus", "agx_cando"),
         ("nerohandtwin.web.server", "nerohandtwin"),
+    ]
+    # 可选：真机后端随官方 pyAgxArm SDK 分发，不随公开发行包打包；
+    # 缺失只影响真机模式，不影响仿真/网页控制台。
+    optional_checks = [
+        ("pyAgxArm", "pyAgxArm"),
     ]
     failed = []
     for mod, label in checks:
@@ -55,6 +59,12 @@ def _frozen_selftest() -> int:
         except Exception as exc:  # noqa: BLE001
             failed.append((label, exc))
             print(f"[selftest] {label:12s} FAIL: {exc}")
+    for mod, label in optional_checks:
+        try:
+            importlib.import_module(mod)
+            print(f"[selftest] {label:12s} OK")
+        except Exception:  # noqa: BLE001
+            print(f"[selftest] {label:12s} 可选缺失（真机后端待硬件到位后随 SDK 重打包）")
     if failed:
         print(f"[selftest] {len(failed)} 项失败，exe 资源不完整")
         return 1
